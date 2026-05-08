@@ -1,0 +1,111 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Design tokens — see docs/DESIGN_SYSTEM.md
+ * Light mode only for MVP. Dark mode is deferred to M4.
+ */
+
+:root {
+  --background: #FAFAF7;
+  --foreground: #0F0F0F;
+  --surface: #FFFFFF;
+  --muted: #F2F2EC;
+  --muted-foreground: #6B6B66;
+  --border: #E5E5E0;
+  --input: #E5E5E0;
+  --ring: #0F4C75;
+
+  --primary: #0F4C75;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #F2F2EC;
+  --secondary-foreground: #0F0F0F;
+
+  --accent: #C97B5A;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #B33A3A;
+  --destructive-foreground: #FFFFFF;
+
+  --success: #2F7D4F;
+
+  --card: #FFFFFF;
+  --card-foreground: #0F0F0F;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F0F0F;
+
+  --radius: 1rem;
+
+  /*
+   * Categorical chart palette — up to 10 contributors.
+   * Order is intentional: index 0 goes to the contributor with the most commits.
+   * See docs/DESIGN_SYSTEM.md.
+   */
+  --chart-1: #4E79A7;
+  --chart-2: #F28E2B;
+  --chart-3: #59A14F;
+  --chart-4: #E15759;
+  --chart-5: #B07AA1;
+  --chart-6: #76B7B2;
+  --chart-7: #EDC948;
+  --chart-8: #FF9DA7;
+  --chart-9: #9C755F;
+  --chart-10: #BAB0AC;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+  --color-chart-7: var(--chart-7);
+  --color-chart-8: var(--chart-8);
+  --color-chart-9: var(--chart-9);
+  --color-chart-10: var(--chart-10);
+
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+
+  --radius-sm: calc(var(--radius) - 0.5rem);
+  --radius-md: calc(var(--radius) - 0.25rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    font-feature-settings: "cv11", "ss01";
+    font-variation-settings: "opsz" 32;
+  }
+}
