@@ -37,6 +37,31 @@ export async function fetchCommits(
     if (data.length < PER_PAGE) break;
   }
 
+  // MVP File Ownership Hack: listCommits doesn't return `.files`.
+  // Fetching all individual commits would hit rate limits.
+  // Instead, we fetch full details for the 30 most recent commits in parallel.
+  // This provides *some* recent file ownership data for the treemap.
+  const recentToEnrich = out.slice(0, 30);
+  await Promise.allSettled(
+    recentToEnrich.map(async (c, i) => {
+      try {
+        const { data: fullCommit } = await octokit.rest.repos.getCommit({
+          owner,
+          repo,
+          ref: c.sha,
+        });
+        out[i].files = fullCommit.files?.map((f) => ({
+          filename: f.filename,
+          additions: f.additions,
+          deletions: f.deletions,
+          status: f.status,
+        }));
+      } catch (err) {
+        // Ignore individual commit fetch failures
+      }
+    }),
+  );
+
   return out;
 }
 

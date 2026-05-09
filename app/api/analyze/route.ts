@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { runM1Analysis } from "@/lib/analysis/runM1Analysis";
-import type { M1AnalysisPayload } from "@/lib/analysis/types";
+import { runFullAnalysis } from "@/lib/analysis/runAnalysis";
+import type { FullAnalysisPayload } from "@/lib/analysis/types";
 import { getCache } from "@/lib/cache";
 import { fetchRepoMeta } from "@/lib/github/fetchRepo";
 import { githubUrlSchema, parseGithubUrl } from "@/lib/github/parseUrl";
@@ -71,8 +71,8 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   const cache = getCache();
-  const cacheKey = `analysis:${owner}/${repo}@${headSha}`;
-  const cached = await cache.get<M1AnalysisPayload>(cacheKey);
+  const cacheKey = `analysis:v3:${owner}/${repo}@${headSha}`;
+  const cached = await cache.get<FullAnalysisPayload>(cacheKey);
   if (cached) {
     return jsonWithRateHeaders(
       cached,
@@ -94,9 +94,9 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  let payload: M1AnalysisPayload;
+  let payload: FullAnalysisPayload;
   try {
-    payload = await runM1Analysis(owner, repo);
+    payload = await runFullAnalysis(owner, repo);
   } catch (err) {
     return mapGithubError(err);
   }
@@ -130,7 +130,7 @@ export async function GET(request: Request): Promise<NextResponse> {
 }
 
 function jsonWithRateHeaders(
-  payload: M1AnalysisPayload,
+  payload: FullAnalysisPayload,
   verdict: { limit: number; remaining: number },
   cacheHit: boolean,
 ): NextResponse {

@@ -23,7 +23,11 @@ const mockOctokit = {
     pulls: {
       list: vi.fn(),
     },
+    git: {
+      getTree: vi.fn(),
+    },
   },
+  request: vi.fn(),
 };
 
 vi.mock("../github/client", () => ({
@@ -38,6 +42,8 @@ beforeEach(() => {
     mockOctokit.rest.repos.getBranch,
     mockOctokit.rest.repos.listCommits,
     mockOctokit.rest.pulls.list,
+    mockOctokit.rest.git.getTree,
+    mockOctokit.request,
   ]) {
     fn.mockReset();
   }
@@ -86,6 +92,10 @@ beforeEach(() => {
     ],
   });
   mockOctokit.rest.pulls.list.mockResolvedValue({ data: [] });
+  // M2: mock stats APIs (return empty/200 for basic tests)
+  mockOctokit.request.mockResolvedValue({ status: 200, data: [] });
+  // M2: mock tree API
+  mockOctokit.rest.git.getTree.mockResolvedValue({ data: { tree: [] } });
 });
 
 async function importRoute() {
