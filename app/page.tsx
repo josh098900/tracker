@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { PasteUrlForm } from "@/components/PasteUrlForm";
 
 export default function Home() {
   return (
@@ -19,26 +18,10 @@ export default function Home() {
           consistency, balance score &mdash; in about ten seconds.
         </p>
 
-        <form
-          className="mt-10 flex flex-col gap-3 sm:flex-row"
-          action="/"
-          aria-label="Analyse a GitHub repository"
-        >
-          <Input
-            type="url"
-            name="url"
-            placeholder="https://github.com/owner/repo"
-            className="font-mono h-11 sm:flex-1"
-            disabled
-            aria-label="GitHub repository URL"
-          />
-          <Button type="submit" size="lg" className="h-11" disabled>
-            Analyse
-          </Button>
-        </form>
+        <PasteUrlForm />
+
         <p className="mt-3 text-sm text-muted-foreground">
-          The form is wired up in M1. Right now this page just proves the M0
-          scaffold &mdash; fonts, colours, and shadcn primitives.
+          Works with any public GitHub repository. No sign-in, no setup.
         </p>
       </div>
     </main>
